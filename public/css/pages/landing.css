@@ -69,13 +69,15 @@
 .logo-tld{
   font-family: var(--font-hero);
   letter-spacing: -0.015em;
-  color: #fff;
+  color: rgba(255,255,255,.92);
   display:inline-block;
 
-  /* THIS is what actually fixes the glow */
-  text-shadow: none !important;
-  opacity: .82;
-  filter: contrast(.92) brightness(.88);
+  /* premium glow: tight + soft bloom, not fog */
+  text-shadow:
+    0 0 10px rgba(255,255,255,.10),
+    0 0 30px rgba(255,255,255,.06);
+
+  opacity: .92;
 }
 
 /* start states */
@@ -105,17 +107,17 @@
 
 @keyframes logoFade{
   to{
-    opacity: .82;
+    opacity: .92;
     transform: translateY(0);
-    filter: contrast(.92) brightness(.88);
+    filter: none;
   }
 }
 
 @keyframes tldSlide{
   to{
-    opacity: .82;
+    opacity: .92;
     transform: translateX(0);
-    filter: contrast(.92) brightness(.88);
+    filter: none;
   }
 }
 
@@ -140,6 +142,28 @@
   border-color: rgba(255,255,255,.18);
 }
 
+.btn.btn-primary{
+  position: relative;
+  overflow: hidden;
+}
+
+.btn.btn-primary::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: radial-gradient(circle at 30% 50%,
+    rgba(255,255,255,.18) 0%,
+    rgba(255,255,255,0) 55%);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+}
+
+.btn.btn-primary:hover::after{
+  opacity: 1;
+  transform: translateX(10px);
+}
+
 .hero-divider{
   width: min(560px, 88vw);
   height: 1px;
@@ -148,70 +172,16 @@
 }
 
 /* =========================
-   TOPBAR
-========================= */
-.topbar{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  display:flex;
-  align-items:center;
-  z-index: 100;
-
-  background: rgba(10,10,12,.72);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,.10);
-
-  opacity: 0;
-  transform: translateY(-8px);
-  pointer-events: none;
-  transition: opacity .25s var(--ease), transform .25s var(--ease);
-}
-
-.topbar.show{
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.topbar-inner{
-  width: 100%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-}
-
-.nav{
-  display:flex;
-  gap: 18px;
-}
-
-.nav a{
-  font-family: var(--font-subtitle);
-  font-weight: 700;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  font-size: 11px;
-  color: rgba(255,255,255,.60);
-  transition: color .2s var(--ease);
-}
-
-.nav a:hover{
-  color: rgba(255,255,255,.92);
-}
-
-/* =========================
    SECTIONS
 ========================= */
 .section{
   padding: 18px 0 70px 0;
+  animation: sectionIn .35s ease-out both;
+}
+
+@keyframes sectionIn{
+  from{ opacity:0; transform: translateY(6px); }
+  to{ opacity:1; transform: translateY(0); }
 }
 
 .featured-grid{
@@ -222,17 +192,16 @@
 }
 
 .card{
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: var(--radius);
-  overflow:hidden;
-  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+  transition:
+    transform .22s var(--ease),
+    border-color .22s var(--ease),
+    background .22s var(--ease),
+    box-shadow .22s var(--ease);
 }
 
 .card:hover{
-  transform: translateY(-2px);
-  background: var(--surface-2);
-  border-color: rgba(255,255,255,.18);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
 }
 
 .card-top{
@@ -301,17 +270,21 @@
    FOOTER
 ========================= */
 .footerbar{
+  position: relative;
   border-top: 1px solid rgba(255,255,255,.08);
   padding: 18px 0;
-  background: rgba(0,0,0,.18);
+  background: transparent;
 }
 
-.footer-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap: 12px;
+.footerbar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.22), rgba(0,0,0,.10));
+  pointer-events:none;
 }
+
+.footerbar{ position: relative; }
 
 .credit{
   color: rgba(255,255,255,.78);

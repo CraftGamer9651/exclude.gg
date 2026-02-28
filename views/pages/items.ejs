@@ -1,12 +1,53 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/base.css" />
-</head>
-<body>
-  <div style="padding:24px;">Item chooser (placeholder)</div>
-</body>
-</html>
+<section class="section">
+  <div class="container" style="padding-top: 26px;">
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <div>
+        <h1 class="section-title" style="margin-bottom:6px;"><%= item.name %></h1>
+        <div class="muted"><%= item.game %></div>
+      </div>
+
+      <div class="card" style="padding:14px 16px; min-width:260px;">
+        <div class="muted" style="font-size:12px; text-transform:uppercase; letter-spacing:.12em;">Price</div>
+        <div style="font-size:26px; font-weight:800; margin-top:6px;">
+          $<%= Number(item.price).toFixed(2) %>
+        </div>
+
+        <button
+          class="btn btn-primary"
+          style="width:100%; margin-top:12px;"
+          data-add-to-cart
+          data-product-id="<%= item.id %>">
+          Add to cart <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px; margin-top:16px;">
+      <div style="font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:12px; opacity:.9;">
+        Delivery
+      </div>
+      <p class="muted" style="margin:10px 0 0 0; line-height:1.6;">
+        Instant fulfillment for most items. If manual verification is required, we’ll notify you immediately.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Minimal add-to-cart wiring (uses your /api/cart/add)
+  document.addEventListener("click", async (e) => {
+    const btn = e.target.closest("[data-add-to-cart]");
+    if (!btn) return;
+
+    const productId = btn.getAttribute("data-product-id");
+    await fetch("/api/cart/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ productId, qty: 1 }),
+    });
+
+    // open cart instantly and re-render
+    document.body.classList.add("cart-open");
+    if (window.renderCartPanel) window.renderCartPanel();
+  });
+</script>

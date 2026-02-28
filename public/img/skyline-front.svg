@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="320" viewBox="0 0 1600 320">
+  <rect width="1600" height="320" fill="none"></rect>
+  <g fill="rgba(255,255,255,0.28)">
+    <path d="M0 320V250h95v-40h100v70h60v-120h160v90h70v-60h120v140h70v-100h120v70h90v-150h200v110h80v-70h140v170h95v-120h200v200H0z"></path>
+  </g>
+  <!-- subtle window blocks (still silhouette-ish) -->
+  <g fill="rgba(255,255,255,0.08)">
+    <rect x="280" y="185" width="18" height="18"></rect>
+    <rect x="310" y="205" width="14" height="14"></rect>
+    <rect x="820" y="170" width="16" height="16"></rect>
+    <rect x="1040" y="200" width="14" height="14"></rect>
+    <rect x="1320" y="175" width="16" height="16"></rect>
+  </g>
+</svg>

@@ -1,8 +1,7 @@
-:root {
-  /* Fonts */
-  --font-hero: "Rubik 80s Fade", system-ui, sans-serif;
-  --font-subtitle: "Open Sauce One", system-ui, sans-serif;
-  --font-body: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+:root{
+  --font-hero: "Oxanium", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  --font-subtitle: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  --font-body: "Space Grotesk", system-ui, -apple-system, Segoe UI, Roboto, Arial;
 
   /* Colors */
   --bg: #0b0c0e;
@@ -14,8 +13,9 @@
   --muted: rgba(255,255,255,.65);
 
   /* Glow */
---glow-soft: 0 0 6px rgba(255,255,255,.12);
---glow-strong: 0 0 10px rgba(255,255,255,.18);
+  --glow-soft: 0 0 8px rgba(255,255,255,.14);
+  --glow-strong: 0 0 14px rgba(255,255,255,.20);
+
 
   /* Edge */
   --edge: 0 1px 0 rgba(0,0,0,.55), 0 0 1px rgba(0,0,0,.8);

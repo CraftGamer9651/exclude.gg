@@ -1,135 +1,60 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= title %></title>
+<section class="hero play">
+  <div class="container hero-inner">
+    <h1 class="hero-logo" aria-label="exclude.gg">
+      <span class="logo-text">exclude</span><span class="logo-dot">.</span><span class="logo-tld">gg</span>
+    </h1>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sauce+One:wght@700&display=swap" rel="stylesheet">
+    <p class="hero-sub">
+      A clean marketplace for game items — fast delivery, legit sellers, real support.
+    </p>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="/css/variables.css" />
-  <link rel="stylesheet" href="/css/base.css" />
-  <link rel="stylesheet" href="/css/pages/landing.css?v=3" />
+    <a class="btn btn-primary" href="/shop">
+      Shop now <span class="arrow">→</span>
+    </a>
 
-  <!-- Scripts -->
-  <script defer src="/js/landing.js"></script>
-</head>
+    <div class="hero-divider" aria-hidden="true"></div>
+  </div>
+</section>
 
-<body>
-  <header class="topbar" id="topbar">
-    <div class="container topbar-inner">
-      <a class="brand" href="/" aria-label="exclude.gg">
-        <span class="brand-text">exclude.gg</span>
-      </a>
+<section class="section" id="featured">
+  <div class="container">
+    <h2 class="section-title">Featured</h2>
 
-      <nav class="nav">
-        <a href="/shop">Shop</a>
-        <a href="#featured">Featured</a>
-        <a href="#top-users">Top users</a>
-        <a href="#why">Why us</a>
-      </nav>
+    <div class="featured-grid">
+      <% (featured || []).forEach(item => { %>
+        <a class="card" href="/item/<%= item.slug %>">
+          <div class="card-top"><%= item.name %></div>
+          <div class="card-bottom">
+            <span class="muted"><%= item.game %></span>
+            <span>$<%= Number(item.price).toFixed(2) %></span>
+          </div>
+        </a>
+      <% }) %>
     </div>
-  </header>
 
-  <main class="hero">
-    <div class="container hero-inner">
-      <h1 class="hero-logo" aria-label="exclude.gg">
-        <span class="logo-text">exclude</span><span class="logo-dot">.</span><span class="logo-tld">gg</span>
-      </h1>
-
-      <p class="hero-sub">
-        A clean marketplace for game items — fast delivery, legit sellers, real support.
-      </p>
-
-      <a class="btn btn-primary" href="/shop">
-        Shop now <span class="arrow">→</span>
-      </a>
-
-      <div class="hero-divider" aria-hidden="true"></div>
+    <div class="featured-cta">
+      <a class="btn" href="/shop">Browse all <span class="arrow">→</span></a>
     </div>
-  </main>
+  </div>
+</section>
 
-  <section class="section" id="featured">
-    <div class="container">
-      <h2 class="section-title">Featured</h2>
+<section class="section section-why" id="why">
+  <div class="container">
+    <h2 class="section-title">Why choose us?</h2>
 
-      <div class="featured-grid">
-        <div class="card">
-          <div class="card-top">Placeholder Item</div>
-          <div class="card-bottom">
-            <span class="muted">Game</span>
-            <span>$4.99</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-top">Placeholder Item</div>
-          <div class="card-bottom">
-            <span class="muted">Game</span>
-            <span>$9.99</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-top">Placeholder Item</div>
-          <div class="card-bottom">
-            <span class="muted">Game</span>
-            <span>$19.99</span>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-top">Placeholder Item</div>
-          <div class="card-bottom">
-            <span class="muted">Game</span>
-            <span>$2.99</span>
-          </div>
-        </div>
+    <div class="why-grid">
+      <div class="why">
+        <div class="why-title">Fast delivery</div>
+        <div class="why-text">Simple checkout and quick fulfillment.</div>
       </div>
-
-      <div class="featured-cta">
-        <a class="btn" href="/shop">Browse all <span class="arrow">→</span></a>
+      <div class="why">
+        <div class="why-title">Trusted sellers</div>
+        <div class="why-text">Built for reputation and transparency.</div>
+      </div>
+      <div class="why">
+        <div class="why-title">Real support</div>
+        <div class="why-text">We actually respond and fix problems.</div>
       </div>
     </div>
-  </section>
-
-  <section class="section section-why" id="why">
-    <div class="container">
-      <h2 class="section-title">Why choose us?</h2>
-
-      <div class="why-grid">
-        <div class="why">
-          <div class="why-title">Fast delivery</div>
-          <div class="why-text">Simple checkout and quick fulfillment.</div>
-        </div>
-        <div class="why">
-          <div class="why-title">Trusted sellers</div>
-          <div class="why-text">Built for reputation and transparency.</div>
-        </div>
-        <div class="why">
-          <div class="why-title">Real support</div>
-          <div class="why-text">We actually respond and fix problems.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footerbar">
-    <div class="container footer-inner">
-      <div class="credit">Created by <strong>eixr</strong> and <strong>knokyoursock</strong></div>
-      <div class="small-links">
-        <a href="/tos">TOS</a>
-        <span class="dot">•</span>
-        <a href="/privacy-policy">Privacy Policy</a>
-        <span class="dot">•</span>
-        <a href="/refund-policy">Refund Policy</a>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
+  </div>
+</section>

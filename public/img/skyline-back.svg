@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="320" viewBox="0 0 1600 320">
+  <rect width="1600" height="320" fill="none"></rect>
+  <g fill="rgba(255,255,255,0.22)">
+    <path d="M0 320V238h70v-40h60v62h45v-90h90v60h55v-140h130v90h40v-60h75v120h55v-80h80v40h70v-120h110v70h55v-50h80v140h55v-90h120v140h45v-60h110v86h50v-130h140v170H0z"></path>
+  </g>
+  <!-- faint antenna lines -->
+  <g stroke="rgba(255,255,255,0.16)" stroke-width="2" fill="none">
+    <path d="M410 80v40"></path>
+    <path d="M980 120v45"></path>
+    <path d="M1260 90v55"></path>
+  </g>
+</svg>

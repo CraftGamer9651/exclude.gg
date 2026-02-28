@@ -1,12 +1,122 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/base.css" />
-</head>
-<body>
-  <div style="padding:24px;">Game chooser (placeholder)</div>
-</body>
-</html>
+<section class="section">
+  <div class="container" style="padding-top: 26px;">
+
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+      <div>
+        <h1 class="section-title" style="margin-bottom:6px;">Shop</h1>
+        <p class="muted" style="margin:0; max-width:720px;">
+          Choose a game, pick an item, checkout fast. Clean flow, no nonsense.
+        </p>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:center;">
+        <input
+          id="shopSearch"
+          placeholder="Search items…"
+          style="
+            width: min(360px, 72vw);
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.04);
+            color: rgba(255,255,255,.92);
+            outline: none;
+          "
+        />
+      </div>
+    </div>
+
+    <% 
+      const allItems = items || [];
+      const games = Array.from(new Set(allItems.map(i => i.game).filter(Boolean))).sort();
+    %>
+
+    <!-- Game chooser -->
+    <div class="card" style="padding:14px; margin-top:16px;">
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <button class="btn" type="button" data-game="all" style="opacity:.95;">All</button>
+        <% games.forEach(g => { %>
+          <button class="btn" type="button" data-game="<%= g %>" style="opacity:.85;"><%= g %></button>
+        <% }) %>
+      </div>
+    </div>
+
+    <!-- Items grid -->
+    <div id="shopGrid" class="featured-grid" style="margin-top:16px;">
+      <% allItems.forEach(item => { %>
+        <div class="card shop-card" data-game="<%= item.game %>" data-name="<%= (item.name || '').toLowerCase() %>">
+          <a href="/item/<%= item.slug %>" style="display:block;">
+            <div class="card-top" style="height: 96px;">
+              <%= item.name %>
+            </div>
+            <div class="card-bottom">
+              <span class="muted"><%= item.game %></span>
+              <span>$<%= Number(item.price).toFixed(2) %></span>
+            </div>
+          </a>
+
+          <div style="padding: 12px 18px; border-top: 1px solid rgba(255,255,255,.08);">
+            <button
+              class="btn btn-primary"
+              type="button"
+              style="width:100%;"
+              data-add-to-cart
+              data-product-id="<%= item.id %>">
+              Add to cart <span class="arrow">→</span>
+            </button>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+
+    <div id="shopEmpty" class="muted" style="display:none; padding:18px 0;">
+      No items match your filter.
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // Lightweight filtering (client-side; no libraries)
+  const grid = document.getElementById("shopGrid");
+  const empty = document.getElementById("shopEmpty");
+  const search = document.getElementById("shopSearch");
+  let activeGame = "all";
+
+  function applyFilters(){
+    const q = (search?.value || "").trim().toLowerCase();
+    const cards = Array.from(grid.querySelectorAll(".shop-card"));
+
+    let visible = 0;
+    for (const c of cards) {
+      const game = c.getAttribute("data-game") || "";
+      const name = c.getAttribute("data-name") || "";
+
+      const okGame = (activeGame === "all") || (game === activeGame);
+      const okSearch = !q || name.includes(q);
+
+      const show = okGame && okSearch;
+      c.style.display = show ? "" : "none";
+      if (show) visible++;
+    }
+
+    if (empty) empty.style.display = visible === 0 ? "" : "none";
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-game]");
+    if (!btn) return;
+    activeGame = btn.getAttribute("data-game") || "all";
+
+    // subtle active state
+    document.querySelectorAll("[data-game]").forEach(b => b.style.opacity = ".85");
+    btn.style.opacity = "1";
+
+    applyFilters();
+  });
+
+  search?.addEventListener("input", applyFilters);
+
+  // initial
+  applyFilters();
+</script>

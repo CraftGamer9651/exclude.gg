@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="container" style="max-width:420px;">
+    <h1 class="section-title">Admin Login</h1>
+
+    <% if (error) { %>
+      <div class="card" style="padding:12px; margin:12px 0;">
+        <strong>Login failed:</strong> <%= error %>
+      </div>
+    <% } %>
+
+    <form method="post" action="/admin/login">
+      <div class="card" style="padding:16px; display:grid; gap:12px;">
+        <label>
+          <div class="muted">Username</div>
+          <input name="username" autocomplete="username" required />
+        </label>
+
+        <label>
+          <div class="muted">Password</div>
+          <input name="password" type="password" autocomplete="current-password" required />
+        </label>
+
+        <button class="btn btn-primary" type="submit">Login</button>
+      </div>
+    </form>
+  </div>
+</section>

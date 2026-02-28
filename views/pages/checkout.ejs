@@ -1,12 +1,42 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/base.css" />
-</head>
-<body>
-  <div style="padding:24px;">Checkout (placeholder)</div>
-</body>
-</html>
+<main class="container" style="padding-top: 26px;">
+  <h1>Checkout</h1>
+
+  <div id="checkoutMsg" style="margin: 12px 0;"></div>
+  <button id="payBtn" class="btn">Pay with Stripe</button>
+</main>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const msg = document.getElementById("checkoutMsg");
+
+  async function finalize() {
+    const sessionId = params.get("session_id");
+    if (!sessionId) return;
+
+    msg.textContent = "Payment successful ✅ Finalizing order...";
+
+    const res = await fetch("/api/orders/finalize", {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({ sessionId })
+    });
+
+    const data = await res.json();
+
+    if (data.ok) {
+      msg.textContent = `Order confirmed ✅ Total: $${(data.order.amountTotalCents/100).toFixed(2)}`;
+    } else {
+      msg.textContent = data.error || "Order finalize failed";
+    }
+  }
+
+  if (params.get("success") === "1") finalize();
+  if (params.get("canceled") === "1") msg.textContent = "Payment canceled.";
+
+  document.getElementById("payBtn").addEventListener("click", async () => {
+    const res = await fetch("/api/checkout/create-session", { method: "POST" });
+    const data = await res.json();
+    if (data.url) window.location.href = data.url;
+    else alert(data.error || "Checkout failed");
+  });
+</script>
